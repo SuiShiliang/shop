@@ -29,7 +29,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
-		registry.jsp("/WEB-INF/jsp",".jsp");
+		registry.jsp("/WEB-INF/jsp/",".jsp");
 	}
 	
 	//为一些静态资源添加映射路径
@@ -40,10 +40,10 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	
 	@Bean
 	public DataSource dataSource(Environment env) {
-		String jdbcurl = env.getProperty("");
-		String username = env.getProperty("");
-		String password = env.getProperty("");
-		String driverClassName = env.getProperty("");
+		String jdbcurl = env.getProperty("jdbc.url");
+		String username = env.getProperty("jdbc.username");
+		String password = env.getProperty("jdbc.password");
+		String driverClassName = env.getProperty("jdbc.driverClassName");
 		DriverManagerDataSource ds = 
 				new DriverManagerDataSource(jdbcurl,username,password);
 		ds.setDriverClassName(driverClassName);
