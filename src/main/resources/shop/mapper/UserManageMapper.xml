@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shop.mapper.UserManageMapper">
+	<resultMap type="Users" id="userMap">
+		<id column="USER_ID" property="id"/>
+		<result column="USER_NAME" property="name"/>
+		<result column="USER_PASSWORD" property="password"/>
+		<result column="SEX" property="sex"/>
+		<result column="AGE" property="age"/>
+		<association property="image" javaType="Images">
+			<id column="IMAGE_ID" property="id"/>
+			<result column="IMAGE_URL" property="url"/>
+			<result column="IMAGE_DISCRIPTION" property="discription"/>
+		</association>
+		<association property="role" javaType="Role">
+			<id column="ROLE_ID" property="id"/>
+			<result column="ROLE_NAME" property="name"/>
+			<result column="ROLE_DISCRIPTION" property="discription"/>
+			<!-- list必须将Javatype的值设置为java.util.ArrayList ，并且需要添加oftype指定其类 -->
+			<collection property="permissions"  javaType="java.util.ArrayList" ofType="Permission">
+				<id column="PERMISSION_ID" property="id"/>
+				<result column="PERMISSION_NAME" property="name"/>
+				<result column="PERMISSION_DESCRIPTION" property="description"/>
+			</collection>
+		</association>
+	</resultMap>
+
+	<select id="findByUsername" resultMap="userMap">
+		select *
+		  from user_t us
+		  left join images_t img
+		    on us.image_id = img.image_id
+		  left join role_t ro
+		    on us.role_id = ro.role_id
+		  left join role_permission_t rop 
+		    on ro.role_id = rop.role_id
+		  left join permission_t pe 
+		    on rop.permission_id = pe.permission_id
+		 where us.user_name = #{username}
+	</select>
+	<!-- 用户注册时默认头像id为1，角色为6（customer） -->
+	<insert id="registerUser" useGeneratedKeys="true" keyColumn="USER_ID" keyProperty="id">
+		insert into user_t
+		  (user_id, user_name, user_password, sex, age, image_id, role_id)
+		values
+		  (user_seq.nextval, #{name},#{password},#{sex},#{age}, 1, 6)
+	</insert>
+	
+	<delete id="deleteUser">
+		delete from user_t us where us.user_id = #{id}
+	</delete>
+	
+	<update id="updateUser"  useGeneratedKeys="true" keyColumn="USER_ID" keyProperty="id">
+		update user_t us
+		   set us.user_name     = #{name},
+		       us.user_password = #{password},
+		       us.sex           = #{sex},
+		       us.age           = #{age},
+		       us.image_id      = #{image.id}
+		 where us.user_id = #{id}
+	</update>
+</mapper>
