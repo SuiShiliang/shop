@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,17 +20,18 @@
 		<sec:csrfInput/>
 		
 		<div>
-			<label for="username"></label>
+			<label for="username">账号</label>
 			<input name = "username" id="username">
 		</div>
 	
 		<div>
-			<label for="password"></label>
+			<label for="password">密码</label>
 			<input name = "password" id="password">
 		</div>
 		
 		<div>
 			<input type="submit" value="登录">
+			<input type="button" value="注册" onclick="window.location.href='${contextPath}/regUser'">
 		</div>
 	
 	</form>
