@@ -59,4 +59,5 @@
 		       us.image_id      = #{image.id}
 		 where us.user_id = #{id}
 	</update>
+	
 </mapper>

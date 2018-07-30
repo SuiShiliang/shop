@@ -1,4 +1,4 @@
-package shop.service.impl;
+package shop.config;
 
 import java.util.ArrayList;
 import java.util.List;

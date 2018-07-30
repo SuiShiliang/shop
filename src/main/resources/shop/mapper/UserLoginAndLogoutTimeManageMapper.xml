@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shop.mapper.UserLoginAndLogoutTimeManageMapper">
+
+	<resultMap type="UserLoginAndLogoutTimeManage" id="timeManageMap">
+		<id column="USER_TIME_ID" property="id"/>
+		<result column="LOGIN_TIME" property="loginTime" javaType="java.util.Date"/>
+		<result column="LOGOUT_TIME" property="logoutTime" javaType="java.util.Date"/>
+	</resultMap>
+
+	<!-- 用户登录注册时间管理 -->
+	<insert id="setLoginTimeByUserId">
+		insert into user_login_logout_time_t
+		  (user_time_id, user_id, isuser, login_time)
+		values
+		  (user_login_logout_time_seq.nextval, #{id}, 1, sysdate)
+	</insert>
+	
+	<select id="getLastLoginTimeIdForUserId" resultMap="timeManageMap">
+		select ull.user_time_id
+		  from user_login_logout_time_t ull
+		 where ull.user_id = #{id}
+		   and ull.isuser = 1
+		   and ull.login_time = (
+		       select max(ull.login_time)
+		         from user_login_logout_time_t ull
+		        where ull.user_id = #{id})
+	</select>
+	
+	<update id="setLogoutTimeByTimeId">
+		update user_login_logout_time_t ull
+		   set ull.logout_time = sysdate
+		 where ull.user_time_id = #{timeId}
+	</update>
+</mapper>

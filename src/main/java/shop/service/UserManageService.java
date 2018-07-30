@@ -12,4 +12,8 @@ public interface UserManageService {
 
 	public void updateUser(Users user);
 
+	public void setLoginTimeByUserId(Long id);
+	
+	public void setLogoutTimeByUserId(Long id);
+
 }

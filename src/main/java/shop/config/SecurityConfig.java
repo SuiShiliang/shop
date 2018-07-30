@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.authorizeRequests()// 配置页面授权
-		.antMatchers("/regUser","/login").permitAll()// 登录页面允许所有用户访问（包括匿名）
+		.antMatchers("/regUser","/login","/asets/**").permitAll()// 登录页面允许所有用户访问（包括匿名）
 //		.antMatchers("/regUser").permitAll()
 //		.antMatchers("/login").permitAll()
 		.antMatchers("/**").authenticated()// 其他页面仅限于登录用户访问
@@ -41,7 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.successHandler(loginSuccessHandle)
 		
 		.and().logout()//注销配置
+			.logoutSuccessUrl("/")
 			.logoutSuccessHandler(logoutSuccessHandler)
+			
 		;
 		
 	}

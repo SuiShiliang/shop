@@ -8,10 +8,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>管理员登录</title>
+<title>登录</title>
 </head>
 <body>
-	<h1>管理员</h1>
+	<h1>登录</h1>
 	<c:if test="${loginError }">
 		<h2 style="color: red;">用户名或密码错误</h2>
 	</c:if>

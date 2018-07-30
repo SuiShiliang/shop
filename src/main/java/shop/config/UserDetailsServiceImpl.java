@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import shop.mapper.UserManageMapper;
 import shop.pojo.Users;
-import shop.service.impl.UserDetailsImpl;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 
